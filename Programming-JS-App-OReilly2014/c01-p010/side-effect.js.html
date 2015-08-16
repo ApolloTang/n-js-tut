@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>??Title??</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:8001/css/lib/normalize-2.1.2.css">
+    <style media="screen" type="text/css">
+        /* css here */
+    </style>
+</head>
+
+<body>
+
+    <!-- HTML HERE -->
+
+    <svg id="svg" style="width:300px; height:300px; border:1px lightgray solid;"></svg>
+    <canvas id="canvas" width="300" height="300" style="border:1px lightgray solid;"></canvas>
+
+    <script src="http://localhost:8001/js/lib/lodash-v2.4.1.js"></script>
+    <script src="http://localhost:8001/js/lib/jquery-1.11.0.js"></script>
+    <script src="http://localhost:8001/js/lib/d3-3.4.13.js"></script>
+    <script>
+
+
+        var cartProto = {
+                items: [],
+                addItem: function addItem(item) { this.items.push(item); }
+            };
+
+        function  createCart(items) {
+            var cart = Object.create(cartProto);
+
+            // cart.items = items;                    //<--- naived solution, will change store content
+            // cart.items = Object.create(items);     //<--- author's fancy solution, new item is stored in protype chain
+            cart.items = items.slice(0);          //<--- my solution
+            return cart;
+        };
+
+        var savedCart = createCart([1, 2, 3]);
+
+        var Session = function(){
+            this.get = function() { return this.cart; },
+            this.cart =  createCart(savedCart.items) // Grab the saved cart.
+        };
+
+        // instance of session
+        var session = new Session();
+        var session2 = new Session();
+
+        console.log('Before new item is added');
+        console.log('session.items: ', session.get().items)
+        console.log('savedCart.items: ', savedCart.items)
+        session.cart.addItem(4);
+        console.log('after new item is added');
+        console.log('session.items: ', session.get().items)
+        console.log('session2.items: ', session2.get().items)
+        console.log('savedCart.items: ', savedCart.items)
+
+
+
+        console.log('index of new item: ', session.cart.items.indexOf(4))
+        if (session.cart.items.indexOf(4) !== -1) {
+            console.log('Pass: Session cart has the added item.')
+        } else if (session.cart.items.indexOf(4) === -1) {
+            console.log('Fail: Session cart does not has the added item.')
+        }
+
+        console.log('index of new item: ', session.cart.items.indexOf(4))
+        if (savedCart.items.indexOf(4) !== -1) {
+            console.log('Fails: The stored cart has changed.')
+        } else if (savedCart.items.indexOf(4) === -1) {
+            console.log('pass: The stored cart is unchanged.')
+        };
+    </script>
+</body>
+
+</html>
