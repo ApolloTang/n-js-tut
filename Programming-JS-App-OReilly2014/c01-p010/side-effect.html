@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>??Title??</title>
+    <title>side-effect</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://localhost:8001/css/lib/normalize-2.1.2.css">
@@ -31,12 +31,12 @@
                 addItem: function addItem(item) { this.items.push(item); }
             };
 
-        function  createCart(items) {
+        function  createCart(_items) {
             var cart = Object.create(cartProto);
 
-            // cart.items = items;                    //<--- naived solution, will change store content
-            // cart.items = Object.create(items);     //<--- author's fancy solution, new item is stored in protype chain
-            cart.items = items.slice(0);          //<--- my solution
+            // cart.items = _items;                    //<--- naived solution, will change store content
+            cart.items = Object.create(_items);     //<--- author's fancy solution, new item is stored in protype chain
+            // cart.items = _items.slice(0);          //<--- my solution
             return cart;
         };
 

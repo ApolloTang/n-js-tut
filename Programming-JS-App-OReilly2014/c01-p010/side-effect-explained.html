@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>prototype chain -- problem</title>
+    <title>2</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://localhost:8001/css/lib/normalize-2.1.2.css">
@@ -25,23 +25,27 @@
     <script src="http://localhost:8001/js/lib/d3-3.4.13.js"></script>
     <script>
 
-        o1 = Object.create({ items:[0,1,2] });
-        o2 = Object.create({ items:[3] });
+        var proto = {
+            items: [],
+            add: function(__item){ this.items.push( __item ); }
+        };
 
-        console.log('o1', o1);
-        console.log('o1.item.length ', o1.items.length)   //3
-        console.log('o1.items ', o1.items )               // [1,2,3]
-        console.log('o1.items.indexOf(3): ', o1.items.indexOf(3)) //-1
-        debugger;
+        function createObj(_items) {
+            myObj = Object.create(proto);     // this obj inherite the object called proto
 
-        o1.items.push(o2); console.log('pushing o2 into o1.items')
+            myObj.items = _items;         // naived solution, will alter items in other instance
+            myObj.items = _items.slice(0);   // items is pointing to a new copy of array so will not alter other instacne
+            // myObj.items = Object.create(_items); // new item is stored in protype chain's array like object,
 
-        console.log('o1', o1);
-        console.log('o1.item.length ', o1.items.length) // 4
-        console.log('o1.items ', o1.items ) // [0,1,2,3, Object]
-        console.log('o1.items.indexOf(3): ', o1.items.indexOf(3)) // -1
-        console.log('o1.items[3].items.indexOf(3) :', o1.items[3].items.indexOf(3)); // 0
+            return  myObj;
+        }
 
+        copy0 = createObj([0,1]);
+        copy1 = createObj(copy0.items);
+
+        console.log(copy0.items);
+        copy1.items.push(3); console.log('pushing into copy1.items to see if it alters copy0.items');
+        console.log(copy0.items);
 
     </script>
 </body>
