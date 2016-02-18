@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>aa</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:8001/css/lib/normalize-2.1.2.css">
+    <style media="screen" type="text/css">
+        /* css here */
+    </style>
+</head>
+
+<body>
+    <script src="http://localhost:8001/js/lib/lodash-v2.4.1.js"></script>
+    <!-- <script src="http://localhost:8001/js/lib/jquery&#45;1.11.0.js"></script> -->
+    <!-- <script src="http://localhost:8001/js/lib/d3&#45;3.4.13.js"></script> -->
+
+<script>
+//
+// Splat convert a function that takes (a, b, c,...) to a function
+// tht takes ([a,b,c,...]). Unsplat is doing the opposite
+//
+//      splat: f(a, b, c) --> f'([a,b,c])
+//    unsplat: g([a,b,c]) --> g'(a, b, c)
+//
+
+
+
+function splat(f) {
+    return function(array) {
+        return f.apply(null, array);
+    };
+}
+
+var f  = function( a,b,c ) { console.log(a,b,c); };
+var f_ = splat(f);
+
+f(1,2,3);     // 1 2 3
+f_([1,2,3]);  // 1 2 3
+
+
+function unsplat(f) {
+    return function() {
+        var a = Array.prototype.slice.call(arguments);
+        return f.call(null, a);
+    };
+}
+
+var g  = function(a) { console.log(a[0], a[1], a[2]);};
+var g_ = unsplat(g);
+
+g([1,2,3]); // 1 2 3
+g_(1,2,3);  // 1 2 3
+
+</script>
+
+</body>
+
+</html>
