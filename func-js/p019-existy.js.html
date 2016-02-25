@@ -18,9 +18,14 @@
 <script src="http://localhost:8001/js/lib/jquery-1.11.0.js"></script>
 <script>
 
+// The function existy check that x is
+// neither "null" nor 'undefined
+// It uses the fact that:
+//      (undefined != null) evaluated to false
+//      (undefined == null) evaluated to true
+
 function existy(x) { return x != null };
-// undefined != null --> false
-// undefined == null --> true
+
 
 var unInitVar;
 var a = {};
@@ -29,12 +34,29 @@ a.existProps = 'exist';
 console.log( existy(0), '0' );
 console.log( existy(''), '' );
 console.log( existy(a.existProps), 'a.existProps' );
+console.log( existy(false), 'false' );
+console.log( existy(true), 'true' );
 
 console.log( existy(null), 'null' );
 console.log( existy(void 0), 'void 0' );
 console.log( existy(unInitVar), 'unInitVar' );
 console.log( existy((function(){})()), '(function(){})()' );
 console.log( existy(a.notExistProps), 'a.notExistProps' );
+
+//  true "0"
+//  true ""
+//  true "a.existProps"
+//  true "false"
+//  true "true"
+
+// false "null"
+// false "void 0"
+// false "unInitVar"
+// false "(function(){})()"
+// false "a.notExistProps"
+
+// [!] Note that both boolean value, true and false, evalue to true
+// The only two value that result in false in existy test is "null" and "undefined"
 
 
 </script>
