@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>existy</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://localhost:8001/css/lib/normalize-2.1.2.css">
+    <style media="screen" type="text/css">
+        /* css here */
+    </style>
+</head>
+
+<body>
+<script src="http://localhost:8001/js/lib/lodash-v2.4.1.js"></script>
+<script src="http://localhost:8001/js/lib/jquery-1.11.0.js"></script>
+<script>
+
+function existy(x) { return x != null };
+// undefined != null --> false
+// undefined == null --> true
+
+var unInitVar;
+var a = {};
+a.existProps = 'exist';
+
+console.log( existy(0), '0' );
+console.log( existy(''), '' );
+console.log( existy(a.existProps), 'a.existProps' );
+
+console.log( existy(null), 'null' );
+console.log( existy(void 0), 'void 0' );
+console.log( existy(unInitVar), 'unInitVar' );
+console.log( existy((function(){})()), '(function(){})()' );
+console.log( existy(a.notExistProps), 'a.notExistProps' );
+
+
+</script>
+
+</body>
+
+</html>
