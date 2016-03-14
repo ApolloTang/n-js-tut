@@ -23,43 +23,93 @@
 // It uses the fact that:
 //      (undefined != null) evaluated to false
 //      (undefined == null) evaluated to true
-
 function existy(x) { return x != null };
+
+
+// The function notFalse check that x is true
+function notFalse(x) { return (x !== false) && existy(x) };
 
 
 var unInitVar;
 var a = {};
 a.existProps = 'exist';
 
+console.log(' - - - - - - - - - - existy ');
+
+console.log( existy(a.existProps), 'a.existProps' );
+console.log( existy(a.notExistProps), 'a.notExistProps' );
+
+console.log( existy(true), 'true' );
+console.log( existy(false), 'false' );
+
 console.log( existy(0), '0' );
 console.log( existy(''), '' );
-console.log( existy(a.existProps), 'a.existProps' );
-console.log( existy(false), 'false' );
-console.log( existy(true), 'true' );
 
 console.log( existy(null), 'null' );
 console.log( existy(void 0), 'void 0' );
 console.log( existy(unInitVar), 'unInitVar' );
 console.log( existy((function(){})()), '(function(){})()' );
-console.log( existy(a.notExistProps), 'a.notExistProps' );
 
-//  true "0"
-//  true ""
-//  true "a.existProps"
-//  true "false"
-//  true "true"
 
-// false "null"
-// false "void 0"
-// false "unInitVar"
-// false "(function(){})()"
-// false "a.notExistProps"
+console.log(' - - - - - - - - - - notFalse ');
 
-// [!] Note that both boolean value, true and false, evalue to true
-// The only two value that result in false in existy test is "null" and "undefined"
+
+console.log( notFalse(a.existProps), 'a.existProps' );
+console.log( notFalse(a.notExistProps), 'a.notExistProps' );
+
+console.log( notFalse(true), 'true' );
+console.log( notFalse(false), 'false' );
+
+console.log( notFalse(0), '0' );
+console.log( notFalse(''), '' );
+
+console.log( notFalse(null), 'null' );
+console.log( notFalse(void 0), 'void 0' );
+console.log( notFalse(unInitVar), 'unInitVar' );
+console.log( notFalse((function(){})()), '(function(){})()' );
+
+
+console.log(' - - - - - - - - - - Truety ');
+
+console.log( Boolean(a.existProps), 'a.existProps' );
+console.log( Boolean(a.notExistProps), 'a.notExistProps' );
+
+console.log( Boolean(true), 'true' );
+console.log( Boolean(false), 'false' );
+
+console.log( Boolean(0), '0' );
+console.log( Boolean(''), '' );
+
+console.log( Boolean(null), 'null' );
+console.log( Boolean(void 0), 'void 0' );
+console.log( Boolean(unInitVar), 'unInitVar' );
+console.log( Boolean((function(){})()), '(function(){})()' );
+
+
+// -------------------------------------------
+// | existy  | notFalse | truety  |
+// --------------------------------------------
+// | true    | true     | true     | a.existProps
+// | false   | false    | false    | a.notExistProps
+
+// | true    | true     | true     | true
+// | true (1)| false    | false    | false
+
+// | true    | true     | false (2)| 0
+// | true    | true     | false (2)| ""
+
+// | false   | false    | false    | null
+// | false   | false    | false    | void 0
+// | false   | false    | false    | unInitVar
+// | false   | false    | false    | (function(){})()
+
+// (1) Note that both boolean value, true and false, evalue to true
+// The only two values can be false for the existy test
+// is "null" and "undefined"
 
 
 </script>
+
 
 </body>
 
